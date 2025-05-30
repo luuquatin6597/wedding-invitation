@@ -8,6 +8,7 @@ const templatesRoutes = require("./routes/templates");
 const weddingInvitationRoutes = require('./routes/weddingInvitationRoutes');
 const authRoutes = require('./routes/auth');
 const dashboardRoutes = require('./routes/dashboard');
+const { testGoogleSheets, testGoogleAI, recommendWeddingSaying } = require('./controllers/aiController');
 
 const app = express();
 const PORT = process.env.SERVER_PORT || 3001;
@@ -55,6 +56,12 @@ app.use("/api/users", usersRoutes);
 app.use("/api/templates", templatesRoutes);
 app.use('/api/wedding-invitations', weddingInvitationRoutes);
 app.use('/api/auth', authRoutes);
+
+// AI and Google Sheets routes
+app.get('/api/test-google-sheets', testGoogleSheets);
+app.post('/api/test-google-ai', testGoogleAI);
+app.post('/api/recommend-wedding-saying', recommendWeddingSaying);
+
 // Catch-all for undefined routes
 app.use((req, res) => {
   res.status(404).json({ message: "Route not found" });
