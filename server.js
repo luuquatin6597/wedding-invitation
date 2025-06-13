@@ -16,7 +16,11 @@ const FRONTEND_PORT = process.env.FRONTEND_PORT || 3000;
 
 // CORS configuration
 const corsOptions = {
-  origin: [`http://localhost:${SERVER_PORT}`, `http://localhost:${FRONTEND_PORT}`],
+  origin: [
+    `http://localhost:${SERVER_PORT}`,
+    `http://localhost:${FRONTEND_PORT}`,
+    process.env.FRONTEND_URL || 'https://wedding-invitation-rho-three.vercel.app'
+  ],
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true

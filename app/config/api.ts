@@ -1,5 +1,5 @@
 const SERVER_PORT = process.env.SERVER_PORT || 3001;
-export const API_BASE_URL = `http://localhost:${SERVER_PORT}/api`;
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || `http://localhost:${SERVER_PORT}/api`;
 
 export const API_ENDPOINTS = {
     users: `${API_BASE_URL}/users`,
