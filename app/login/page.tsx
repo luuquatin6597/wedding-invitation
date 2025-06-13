@@ -10,13 +10,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { toast } from "sonner"
 import axios from "axios"
 import { API_ENDPOINTS } from "@/app/config/api"
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  role: string;
-}
+import { useUser } from "@/hooks/useUser"
+import { User, UserRole } from "@/lib/auth"
 
 interface LoginResponse {
   token: string;
@@ -25,6 +20,7 @@ interface LoginResponse {
 
 export default function LoginPage() {
   const router = useRouter()
+  const { updateUser } = useUser()
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
     email: "",
@@ -64,8 +60,9 @@ export default function LoginPage() {
       setLoading(true)
       const response = await axios.post<LoginResponse>(API_ENDPOINTS.login, formData)
       
-      // Lưu token vào localStorage
+      // Lưu token và user data
       localStorage.setItem("token", response.data.token)
+      updateUser(response.data.user)
       
       toast.success("Đăng nhập thành công")
       

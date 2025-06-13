@@ -8,7 +8,7 @@ import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { Spinner } from "@/components/ui/spinner"
 import axios from "axios"
-import { API_ENDPOINTS, API_BASE_URL } from "@/app/config/api"
+import { API_ENDPOINTS } from "@/app/config/api"
 import { toast } from "sonner"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -98,18 +98,18 @@ export default function TemplateDetailPage() {
         const response = await axios.get(`${API_ENDPOINTS.templates}/${params.id}`)
         const templateData = response.data as Template
         setTemplate(templateData)
-        
+
         // Initialize preview values with default values
         const initialValues: Record<string, string> = {}
         templateData.dynamicFields.forEach((field) => {
           initialValues[field.name] = field.defaultValue || ''
         })
         setPreviewValues(initialValues)
-        
+
         // Check authentication
         const token = localStorage.getItem("token")
         if (token) {
-          const userRes = await axios.get(`${API_BASE_URL}/auth/me`, {
+          const userRes = await axios.get(`${API_ENDPOINTS.me}`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -126,7 +126,7 @@ export default function TemplateDetailPage() {
       } finally {
         setLoading(false)
       }
-    }      
+    }
 
     if (params.id) {
       fetchTemplate()
@@ -177,7 +177,7 @@ export default function TemplateDetailPage() {
         </body>
       </html>
     `
-    
+
     // Update iframe srcDoc
     const updateIframe = () => {
       if (iframeRef.current) {
@@ -220,7 +220,7 @@ export default function TemplateDetailPage() {
   // Function to format date for input
   const formatDateForInput = (dateStr: string | undefined) => {
     if (!dateStr) return ''
-    
+
     // Convert from DD/MM/YYYY to YYYY-MM-DD
     const [day, month, year] = dateStr.split("/")
     if (day && month && year) {
@@ -239,7 +239,7 @@ export default function TemplateDetailPage() {
 
     setIsSaving(true)
     try {
-      const response = await axios.post(`${API_BASE_URL}/wedding-invitations`, {
+      const response = await axios.post(`${API_ENDPOINTS.weddingInvitations}`, {
         templateId: template?._id,
         userId: user?.id,
         fields: previewValues,
@@ -266,7 +266,7 @@ export default function TemplateDetailPage() {
 
   const handleCreateInvitation = () => {
     if (!template) return;
-    
+
     if (template.price === 'paid') {
       // TODO: Implement payment flow
       toast.error("Tính năng thanh toán đang được phát triển");
@@ -333,8 +333,8 @@ export default function TemplateDetailPage() {
                 </div>
               )}
             </div>
-            <Button 
-              onClick={handleSave} 
+            <Button
+              onClick={handleSave}
               disabled={isSaving}
               className="bg-pink-600 hover:bg-pink-700 text-white"
             >

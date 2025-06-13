@@ -10,13 +10,12 @@ import {
   Users,
   FileText,
   Mail,
-  Settings,
   LogOut,
   Sun,
   Moon,
 } from "lucide-react"
 import { User } from "@/lib/auth"
-import { API_BASE_URL } from "@/app/config/api"
+import { API_ENDPOINTS } from "@/app/config/api"
 import { useTheme } from "next-themes"
 
 const sidebarNavItems = [
@@ -53,7 +52,7 @@ export default function AdminSidebar({ user }: AdminSidebarProps) {
 
   const handleLogout = async () => {
     try {
-      await fetch(`${API_BASE_URL}/auth/logout`, { 
+      await fetch(`${API_ENDPOINTS.logout}`, {
         method: "POST",
         credentials: 'include',
         headers: {
@@ -61,7 +60,7 @@ export default function AdminSidebar({ user }: AdminSidebarProps) {
         }
       })
       localStorage.removeItem('token')
-      router.push("/login")
+      router.push("/")
     } catch (error) {
       console.error("Logout error:", error)
     }
@@ -93,8 +92,8 @@ export default function AdminSidebar({ user }: AdminSidebarProps) {
                 variant={pathname === item.href ? "secondary" : "ghost"}
                 className={cn(
                   "w-full justify-start",
-                  pathname === item.href 
-                    ? "bg-pink-100 dark:bg-pink-900/50 text-pink-600 dark:text-pink-400" 
+                  pathname === item.href
+                    ? "bg-pink-100 dark:bg-pink-900/50 text-pink-600 dark:text-pink-400"
                     : "text-gray-700 dark:text-gray-300 hover:bg-pink-50 dark:hover:bg-pink-900/30 hover:text-pink-600 dark:hover:text-pink-400"
                 )}
                 asChild

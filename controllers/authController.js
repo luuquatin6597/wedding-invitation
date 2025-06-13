@@ -6,7 +6,6 @@ const bcrypt = require("bcryptjs");
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log('Login attempt:', { email });
 
     // Kiểm tra email và password
     if (!email || !password) {
@@ -18,7 +17,6 @@ exports.login = async (req, res) => {
 
     // Tìm user theo email
     const user = await User.findOne({ email });
-    console.log('User found:', user ? 'Yes' : 'No');
     
     if (!user) {
       console.log('User not found');
@@ -28,10 +26,7 @@ exports.login = async (req, res) => {
     }
 
     // Kiểm tra mật khẩu
-    console.log('Password:', password);
-    console.log('User password:', user.password);
     const isMatch = await bcrypt.compare(password, user.password);
-    console.log('Password match:', isMatch ? 'Yes' : 'No');
     
     if (!isMatch) {
       console.log('Password does not match');
@@ -46,7 +41,6 @@ exports.login = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
     );
-    console.log('Token generated successfully');
 
     // Trả về thông tin user và token
     res.status(200).json({

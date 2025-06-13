@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { User } from "@/lib/auth"
 import AdminSidebar from "@/components/admin/admin-sidebar"
-import { API_BASE_URL } from "@/app/config/api"
+import { API_ENDPOINTS } from "@/app/config/api"
 import { Spinner } from "@/components/ui/spinner"
 
 export default function AdminLayout({
@@ -19,7 +19,7 @@ export default function AdminLayout({
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/auth/me`, {
+        const response = await fetch(`${API_ENDPOINTS.me}`, {
           credentials: 'include',
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`

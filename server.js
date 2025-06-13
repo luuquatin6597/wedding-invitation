@@ -8,14 +8,15 @@ const templatesRoutes = require("./routes/templates");
 const weddingInvitationRoutes = require('./routes/weddingInvitationRoutes');
 const authRoutes = require('./routes/auth');
 const dashboardRoutes = require('./routes/dashboard');
-const { testGoogleSheets, testGoogleAI, recommendWeddingSaying } = require('./controllers/aiController');
+const { recommendWeddingSaying } = require('./controllers/aiController');
 
 const app = express();
-const PORT = process.env.SERVER_PORT || 3001;
+const SERVER_PORT = process.env.SERVER_PORT || 3001;
+const FRONTEND_PORT = process.env.FRONTEND_PORT || 3000;
 
 // CORS configuration
 const corsOptions = {
-  origin: [`http://localhost:${process.env.SERVER_PORT || 3001}`, `http://localhost:${process.env.FRONTEND_PORT || 3000}`],
+  origin: [`http://localhost:${SERVER_PORT}`, `http://localhost:${FRONTEND_PORT}`],
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
@@ -56,10 +57,6 @@ app.use("/api/users", usersRoutes);
 app.use("/api/templates", templatesRoutes);
 app.use('/api/wedding-invitations', weddingInvitationRoutes);
 app.use('/api/auth', authRoutes);
-
-// AI and Google Sheets routes
-app.get('/api/test-google-sheets', testGoogleSheets);
-app.post('/api/test-google-ai', testGoogleAI);
 app.post('/api/recommend-wedding-saying', recommendWeddingSaying);
 
 // Catch-all for undefined routes
@@ -68,6 +65,6 @@ app.use((req, res) => {
 });
 
 // Start server
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+app.listen(SERVER_PORT, () => {
+  console.log(`Server is running on port ${SERVER_PORT}`);
 });

@@ -13,7 +13,7 @@ const sheets = google.sheets({ version: 'v4', auth: client });
 async function getWeddingSayings() {
     try {
         const spreadsheetId = '1AXfSH0-ud95K50RD-ENXnu0bYgv676xFnuw0pK8r94g';
-        const range = 'Sheet1!A1:B71';
+        const range = 'Sheet1!A1:C71';
 
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId,
@@ -25,6 +25,7 @@ async function getWeddingSayings() {
             const data = rows.slice(1).map(row => ({
                 category: row[0],
                 content: row[1],
+                keyword: row[2],
             }));
             return data;
         } else {
