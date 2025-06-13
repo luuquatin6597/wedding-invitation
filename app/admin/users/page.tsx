@@ -12,8 +12,8 @@ import { Search, MoreHorizontal, Ban, Pencil, Lock, Unlock } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
-import AddUserSidebar from "@/app/components/AddUserSidebar";
-import EditUserSidebar from "@/app/components/EditUserSidebar";
+import AddUserSidebar from "@/components/admin/AddUserSidebar";
+import EditUserSidebar from "@/components/admin/EditUserSidebar";
 import { Spinner } from "@/components/ui/spinner"
 import Link from "next/link"
 import { toast } from "react-hot-toast"
@@ -63,7 +63,7 @@ export default function UsersPage() {
     try {
       setIsSuspending(true);
       setError(null);
-      
+
       const response = await axios.patch(`${API_ENDPOINTS.users}/${userId}/status`, {
         status: "suspended"
       });
@@ -155,8 +155,8 @@ export default function UsersPage() {
     <div className="space-y-6 pt-6 lg:pt-0">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold tracking-tight">Người dùng</h1>
-        <Button 
-          className="bg-pink-600 hover:bg-pink-700" 
+        <Button
+          className="bg-pink-600 hover:bg-pink-700"
           onClick={() => setIsAddUserSidebarOpen(true)}
         >
           Thêm người dùng
@@ -252,7 +252,7 @@ export default function UsersPage() {
                       <td className="px-4 py-3 text-sm text-center">{user.weddingInvitationCount}</td>
                       <td className="px-4 py-3 text-sm text-gray-600 dark:text-gray-300">{user.registeredAt}</td>
                       <td className="px-4 py-3">
-                      {getStatusBadge(user.status)}
+                        {getStatusBadge(user.status)}
                       </td>
                       <td className="px-4 py-3 text-right">
                         <DropdownMenu>
@@ -263,7 +263,7 @@ export default function UsersPage() {
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
-                            <DropdownMenuItem 
+                            <DropdownMenuItem
                               className="cursor-pointer flex items-center"
                               onClick={() => {
                                 setUserToEdit(user);
@@ -274,7 +274,7 @@ export default function UsersPage() {
                               <span>Sửa</span>
                             </DropdownMenuItem>
                             {user.status !== "suspended" ? (
-                              <DropdownMenuItem 
+                              <DropdownMenuItem
                                 className="cursor-pointer flex items-center text-red-600 dark:text-red-400"
                                 onClick={() => setUserToSuspend(user)}
                               >
@@ -282,7 +282,7 @@ export default function UsersPage() {
                                 <span>Khóa tài khoản</span>
                               </DropdownMenuItem>
                             ) : (
-                              <DropdownMenuItem 
+                              <DropdownMenuItem
                                 className="cursor-pointer flex items-center text-green-600 dark:text-green-400"
                                 onClick={() => handleStatusChange(user._id, "active")}
                               >
