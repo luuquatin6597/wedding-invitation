@@ -26,4 +26,5 @@ export interface WeddingInvitation {
     status?: string;
     createdAt?: string;
     updatedAt?: string;
+    customValues?: { [key: string]: string };
 }

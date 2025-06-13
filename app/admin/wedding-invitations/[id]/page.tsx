@@ -130,8 +130,8 @@ export default function EditWeddingInvitationPage() {
             </Button>
             <h1 className="text-3xl font-bold tracking-tight">Chỉnh sửa thiệp cưới</h1>
           </div>
-          <Button 
-            onClick={handleSave} 
+          <Button
+            onClick={handleSave}
             disabled={isSaving}
             className="bg-pink-600 hover:bg-pink-700 text-white"
           >
@@ -154,15 +154,15 @@ export default function EditWeddingInvitationPage() {
           <div className="space-y-4">
             <h2 className="text-xl font-semibold">Xem trước</h2>
             <div className="border rounded-lg p-4 bg-gray-50 dark:bg-gray-900">
-              <div 
+              <div
                 className="preview-container"
-                dangerouslySetInnerHTML={{ 
+                dangerouslySetInnerHTML={{
                   __html: `
-                    <style>${weddingInvitation.templateId?.css}</style>
-                    ${weddingInvitation.templateId?.html}
-                    <script>${weddingInvitation.templateId?.js}</script>
+                    <style>${weddingInvitation.template?.css}</style>
+                    ${weddingInvitation.template?.html}
+                    <script>${weddingInvitation.template?.js}</script>
                   `
-                }} 
+                }}
               />
             </div>
           </div>
@@ -184,20 +184,20 @@ export default function EditWeddingInvitationPage() {
                 </Select>
               </div>
 
-              {weddingInvitation.templateId.dynamicFields.map((field) => (
+              {weddingInvitation.template?.dynamicFields?.map((field) => (
                 <div key={field.id} className="space-y-2">
                   <label className="text-sm font-medium">{field.description}</label>
                   {field.type === "color" ? (
                     <input
                       type="color"
-                      value={weddingInvitation.customValues[field.name]}
+                      value={weddingInvitation.customValues?.[field.name] ?? ""}
                       onChange={(e) => handleInputChange(field.name, e.target.value)}
                       className="w-full h-10 rounded-md border border-gray-300 dark:border-gray-700"
                     />
                   ) : (
                     <input
                       type={field.type === "date" ? "date" : "text"}
-                      value={weddingInvitation.customValues[field.name]}
+                      value={weddingInvitation.customValues?.[field.name]}
                       onChange={(e) => handleInputChange(field.name, e.target.value)}
                       className="w-full h-10 px-3 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800"
                     />
